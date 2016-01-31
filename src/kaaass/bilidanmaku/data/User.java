@@ -1,4 +1,4 @@
-package kaaass.bilidanmaku.user;
+package kaaass.bilidanmaku.data;
 
 import com.google.gson.Gson;
 
