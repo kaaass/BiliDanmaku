@@ -1,12 +1,19 @@
 # BiliDanmaku[WIP]
 Add user's name of each comment in bilibili.
+![Demo version](1.png)
 
 ##Runing Step
-1.When bilibili's player requested comment file from comment.bilibili.com(localed server by nginx).\n
-2.The local server requested comment.bilibili.com(remote) server to get original danmaku xml file.\n
-3.The program add name of user after comment for each comment.\n
-4.Post comment file(modified) to bilibili's player.
+To be continued...
+
+##How Data Comes?
+"generate_user_data.php" is the way to generate user data.
+P.S. SQLite command: 
+CREATE TABLE IF NOT EXISTS `user_table` (
+  `MID` int(11) NOT NULL,
+  `UID` varchar(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 ##Thanks to
-Fuckbilibili(http://www.fuckbilibili.com/)\n
+Fuckbilibili(http://www.fuckbilibili.com/)
+
 SuperFashi(http://www.superfashi.com/)
