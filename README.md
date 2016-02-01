@@ -1,6 +1,6 @@
 # BiliDanmaku[WIP]
 Add user's name of each comment in bilibili.
-![Demo version](1.png)
+![Demo version](demo.png)
 
 ##Runing Step
 To be continued...
