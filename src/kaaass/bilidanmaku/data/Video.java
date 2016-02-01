@@ -3,22 +3,21 @@ package kaaass.bilidanmaku.data;
 import java.util.HashMap;
 import java.util.Map;
 
-import kaaass.bilidanmaku.util.CodeUtils;
+import kaaass.bilidanmaku.util.FileUtils;
+import kaaass.bilidanmaku.util.StringUtils;
 import kaaass.bilidanmaku.util.NetworkUtils;
 
 import com.google.gson.Gson;
 
 public class Video {
-	int aid;
-	int page;
-	String cid;
+	private int aid;
+	private int page;
+	private String cid;
 
 	private Video(String av, int page) {
 		this.aid = Integer.valueOf(av.substring(2));
 		this.page = page;
 		this.remote();
-		System.out.println(this.aid);
-		System.out.println(this.page);
 	}
 
 	public static Video fromAID(String av) {
@@ -53,9 +52,8 @@ public class Video {
 			p.put("id", String.valueOf(this.aid));
 			p.put("page", String.valueOf(this.page));
 			p.put("type", "json");
-			String data = CodeUtils.getSign(p, CodeUtils.APPKEY,
-					CodeUtils.APP_SECRET);
-			System.out.println(data);
+			String data = NetworkUtils.getSign(p, StringUtils.APPKEY,
+					StringUtils.APP_SECRET);
 			data = NetworkUtils.getJsonString("http://api.bilibili.com/view?"
 					+ data);
 			Video u = gson.fromJson(data, Video.class);
@@ -69,5 +67,22 @@ public class Video {
 	@Override
 	public String toString() {
 		return this.cid;
+	}
+
+	/**
+	 * Get danmaku from server and process de-anonymous.
+	 * 
+	 * @return danmaku data
+	 */
+	public String getDanmaku() {
+		String origin = NetworkUtils
+				.getJsonString("http://comment.bilibili.com/" + this.cid
+						+ ".xml");
+		String data = "";
+		for (String c : StringUtils.deleteXMLHeader(origin).split("\n"))
+			data += StringUtils.commentDeAnonymous(c) + "\n";
+		data = StringUtils.addXMLHeader(data, origin);
+		FileUtils.saveXML(data);
+		return data;
 	}
 }

@@ -1,5 +1,6 @@
 package kaaass.bilidanmaku.util;
 
+import java.util.Map;
 import java.util.Random;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -60,5 +61,28 @@ public class NetworkUtils {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	/**
+	 * A method to get the sign to bilibili's api. Copy from(Python):
+	 * www.fuckbilibili.com/biliapi.html#bapi-1. Translated by: KAAAsS
+	 * 
+	 * @param params
+	 * @param appKey
+	 * @param appSecret
+	 * @return
+	 */
+	public static String getSign(Map<String, String> params, String appKey,
+			String appSecret) {
+		String data = "";
+		params.put("appkey", appKey);
+		for (String key : params.keySet()) {
+			if (data != "")
+				data += "&";
+			data += key + "=" + params.get(key);
+		}
+		if (appSecret == null)
+			return data;
+		return data + "&sign=" + StringUtils.MD5(data + appSecret);
 	}
 }
