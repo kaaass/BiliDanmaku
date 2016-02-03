@@ -26,7 +26,7 @@ public class Main {
 
 		// A test video
 		System.out.println(Video.fromURL(
-				"http://www.bilibili.com/video/av635857/").getDanmaku());
+				"http://www.bilibili.com/video/av2448638/").getDanmaku());//av635857
 	}
 
 }
