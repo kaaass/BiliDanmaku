@@ -1,12 +1,12 @@
-package kaaass.bilidanmaku;
+package net.kaaass.bilidanmaku;
 
-import kaaass.bilidanmaku.data.User;
-import kaaass.bilidanmaku.data.Video;
+import net.kaaass.bilidanmaku.data.User;
+import net.kaaass.bilidanmaku.data.Video;
 
 public class Main {
 
 	public static void main(String[] args) {
-		//test();
+		test();
 		if (args == null) {
 			System.out.println("Invalid params.");
 			return;
@@ -24,9 +24,10 @@ public class Main {
 		System.out.println(User.fromMID("543732")); // The maker ^_^
 		System.out.println(User.fromUID("1ad5be0d")); // The owner of Bilibili
 
+		// This application was broke by unsupported deflate encoding.
 		// A test video
-		System.out.println(Video.fromURL(
-				"http://www.bilibili.com/video/av635857/").getDanmaku());
+		//System.out.println(Video.fromURL(
+		//		"http://www.bilibili.com/video/av2304909/").getDanmaku());//av635857
 	}
 
 }

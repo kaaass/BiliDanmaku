@@ -1,8 +1,8 @@
-package kaaass.bilidanmaku.data;
+package net.kaaass.bilidanmaku.data;
 
 import com.google.gson.Gson;
 
-import kaaass.bilidanmaku.util.NetworkUtils;
+import net.kaaass.bilidanmaku.util.NetworkUtils;
 
 public class User {
 	public static final int UID = 0;
@@ -13,16 +13,27 @@ public class User {
 	private String name;
 	private Object level_info;
 	private int current_level;
+	private boolean anonymous = false;
 
 	private User(String input, int type) {
 		switch (type) {
 		case UID:
 			try {
-				String data = NetworkUtils
-						.getJsonString("http://biliquery.typcn.com/api/user/hash/"
-								+ input);
-				this.mid = data.substring(data.indexOf("\"id\":") + 5,
-						data.indexOf("}]}"));
+				String data = "";
+				int p = 0;
+				for (int i = 0; i < 3; i++) {
+					data = NetworkUtils
+							.getJsonString("http://biliquery.typcn.com/api/user/hash/"
+									+ input);
+					p = data.indexOf("\"id\":");
+					if (p > 0)
+						break;
+				}
+				if (p > 0) {
+					this.mid = data.substring(p + 5, data.indexOf("}]}"));
+				} else {
+					this.anonymous = true;
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				this.mid = null;
@@ -59,28 +70,31 @@ public class User {
 	 * Get user data from server.
 	 */
 	public void remote() {
-		try {
-			Gson gson = new Gson();
-			String data = NetworkUtils
-					.getJsonString("http://api.bilibili.com/userinfo?mid="
-							+ this.mid);
-			User u = gson.fromJson(data, User.class);
-			this.name = u.name;
-			u = gson.fromJson(u.level_info.toString(), User.class);
-			this.current_level = u.current_level;
-		} catch (Exception e) {
-			e.printStackTrace();
-			this.name = null;
-			this.current_level = -1;
-			this.level_info = null;
+		if (!this.anonymous) {
+			try {
+				Gson gson = new Gson();
+				String data = NetworkUtils
+						.getJsonString("http://api.bilibili.com/userinfo?mid="
+								+ this.mid);
+				User u = gson.fromJson(data, User.class);
+				this.name = u.name;
+				u = gson.fromJson(u.level_info.toString(), User.class);
+				this.current_level = u.current_level;
+			} catch (Exception e) {
+				e.printStackTrace();
+				this.name = null;
+				this.current_level = -1;
+				this.level_info = null;
+			}
 		}
 	}
 
 	@Override
 	public String toString() {
-		if (this.mid == null) {
+		if (this.anonymous)
+			return "ÓÎ¿Íµ¯Ä»";
+		if (this.mid == null)
 			return null;
-		}
 		return this.name + " lv." + this.current_level;
 	}
 }

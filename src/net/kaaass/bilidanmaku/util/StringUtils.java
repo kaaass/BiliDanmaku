@@ -1,8 +1,8 @@
-package kaaass.bilidanmaku.util;
+package net.kaaass.bilidanmaku.util;
 
 import java.security.MessageDigest;
 
-import kaaass.bilidanmaku.data.User;
+import net.kaaass.bilidanmaku.data.User;
 
 public class StringUtils {
 	// APP Key from fuckbilibili.com
