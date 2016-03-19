@@ -12,8 +12,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
-import java.util.zip.DeflaterInputStream;
 import java.util.zip.GZIPInputStream;
+import java.util.zip.Inflater;
+import java.util.zip.InflaterInputStream;
 
 public class NetworkUtils {
 	public static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.99 Safari/537.36";
@@ -36,7 +37,7 @@ public class NetworkUtils {
 			ip = "59.152.193." + ip;
 		}
 		Map<String, String> header = new HashMap<String, String>();
-		header.put("Accept-Encoding", "gzip");
+		header.put("Accept-Encoding", "gzip, deflate");
 		header.put("User-Agent", USER_AGENT);
 		header.put("Client-IP", ip);
 		header.put("X-Forwarded-For", ip);
@@ -59,7 +60,6 @@ public class NetworkUtils {
 				String key = (String) header.next();
 				urlCon.addRequestProperty(key, headerMap.get(key));
 			}
-			urlCon.setRequestProperty("Accept-Encoding", "gzip");
 			String cType = urlCon.getHeaderField("Content-Type");
 			int i = cType.indexOf("charset=");
 			if (i != -1)
@@ -71,7 +71,7 @@ public class NetworkUtils {
 				if (cType.indexOf("gzip") != -1) {
 					input = new GZIPInputStream(input);
 				} else if (cType.indexOf("deflate") != -1) {
-					input = new DeflaterInputStream(input);
+					input = new InflaterInputStream(input, new Inflater(true));
 				}
 			}
 			Reader reader = new InputStreamReader(input, encode);

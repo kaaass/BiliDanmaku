@@ -2,6 +2,7 @@ package net.kaaass.bilidanmaku.data;
 
 import net.kaaass.bilidanmaku.util.FileUtils;
 import net.kaaass.bilidanmaku.util.NetworkUtils;
+import net.kaaass.bilidanmaku.util.StringUtils;
 
 public class Video {
 	private int aid;
@@ -94,12 +95,10 @@ public class Video {
 		System.out.println("http://comment.bilibili.com/" + this.cid + ".xml");
 		System.out.println(origin);
 		String data = "";
-		/*
 		for (String c : StringUtils.deleteXMLHeader(origin).split("\n"))
 			data += StringUtils.commentDeAnonymous(c) + "\n";
 		data = StringUtils.addXMLHeader(data, origin);
 		FileUtils.saveXML(data);
-		*/
 		return data;
 	}
 }

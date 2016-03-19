@@ -24,10 +24,9 @@ public class Main {
 		System.out.println(User.fromMID("543732")); // The maker ^_^
 		System.out.println(User.fromUID("1ad5be0d")); // The owner of Bilibili
 
-		// This application was broke by unsupported deflate encoding.
 		// A test video
-		//System.out.println(Video.fromURL(
-		//		"http://www.bilibili.com/video/av2304909/").getDanmaku());//av635857
+		System.out.println(Video.fromURL(
+				"http://www.bilibili.com/video/av541430/").getDanmaku());//av635857
 	}
 
 }
