@@ -1,4 +1,6 @@
-# BiliDanmaku[WIP][![Gitter](https://badges.gitter.im/kaaass/BiliDanmaku.svg)](https://gitter.im/kaaass/BiliDanmaku?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+# BiliDanmaku
+[WIP][![Gitter](https://badges.gitter.im/kaaass/BiliDanmaku.svg)](https://gitter.im/kaaass/BiliDanmaku?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 Add user's name of each comment in bilibili.
 ![Demo version](demo.png)
 
