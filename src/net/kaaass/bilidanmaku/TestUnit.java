@@ -38,9 +38,9 @@ public class TestUnit {
 
 	@Test
 	public void testDanmakuParse() {
-		Video.fromURL(TEST_VIDEO_URL).getDanmaku();
+		Video.fromURL(TEST_VIDEO_URL).getDanmaku(true);
 	}
-	
+
 	@Test
 	public void testCacheSave() {
 		FileUtils.saveCache();

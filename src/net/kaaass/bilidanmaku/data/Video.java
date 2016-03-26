@@ -15,16 +15,24 @@ import net.kaaass.bilidanmaku.util.StringUtils;
 public class Video {
 
 	private final int DANMAKU_PER_TASK = 30;
-	private final int DANMAKU_POOL_SIZE = 10;
+	private final int DANMAKU_POOL_SIZE = 15;
 
 	private int aid;
 	private int page;
-	private int cid;
+	private int cid = -1;
+
+	private Video(int cid) {
+		this.cid = cid;
+	}
 
 	private Video(String av, int page) {
 		this.aid = Integer.valueOf(av.substring(2));
 		this.page = page;
 		this.remote();
+	}
+
+	public static Video fromCID(int cid) {
+		return new Video(cid);
 	}
 
 	public static Video fromAID(String av) {
@@ -36,8 +44,10 @@ public class Video {
 	}
 
 	public static Video fromURL(String url) {
-		int i = url.indexOf("#page=");
+		int i = url.indexOf("index_");
 		if (i > 0) {
+			i = Integer.valueOf(url.substring(i + 6, url.indexOf(".html")));
+		} else if ((i = url.indexOf("#page=")) > 0) {
 			i = Integer.valueOf(url.substring(i + 6, url.length()));
 		} else {
 			i = 1;
@@ -53,6 +63,8 @@ public class Video {
 	 * Get video data from server.
 	 */
 	public void remote() {
+		if (this.cid != -1)
+			return;
 		try {
 			/*
 			 * Api key present not available
@@ -99,7 +111,7 @@ public class Video {
 	 * 
 	 * @return danmaku data
 	 */
-	public String getDanmaku() {
+	public String getDanmaku(boolean isSave) {
 		System.out.println("Call: http://comment.bilibili.com/" + this.cid
 				+ ".xml");
 		String origin = NetworkUtils
@@ -142,11 +154,17 @@ public class Video {
 		 * += StringUtils.commentDeAnonymous(c) + "\n";
 		 */
 		data = StringUtils.addXMLHeader(data, origin);
+		if (!isSave) {
+			System.out.println("Progress: 100%.");
+			FileUtils.saveCache();
+			return data;
+		}
 		if (FileUtils.saveXML(data)) {
 			System.out.println("Progress: 100%, succeeded saving.");
 		} else {
 			System.out.println("Progress: 100%, error saving.");
 		}
+		FileUtils.saveCache();
 		return data;
 	}
 }

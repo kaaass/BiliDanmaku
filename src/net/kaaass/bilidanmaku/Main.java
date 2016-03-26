@@ -1,13 +1,16 @@
 package net.kaaass.bilidanmaku;
 
 import net.kaaass.bilidanmaku.data.Video;
-import net.kaaass.bilidanmaku.util.FileUtils;
+import net.kaaass.bilidanmaku.server.CommentServer;
 
 public class Main {
 
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 
 	public static void main(String[] args) {
+		CommentServer server = new CommentServer();
+		server.start();
+		System.exit(0);
 		if (args == null) {
 			System.out.println("Invalid params.");
 			return;
@@ -19,12 +22,11 @@ public class Main {
 		long time;
 		if (DEBUG)
 			time = System.currentTimeMillis();
-		Video.fromURL(args[0]).getDanmaku();
+		Video.fromURL(args[0]).getDanmaku(true);
 		if (DEBUG)
 			System.out.println("Time cost: "
 					+ (float) (System.currentTimeMillis() - time) / 1000F
 					+ "s.");
-		FileUtils.saveCache();
 		System.exit(0);
 	}
 }

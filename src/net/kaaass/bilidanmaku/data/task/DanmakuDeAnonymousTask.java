@@ -26,8 +26,13 @@ public class DanmakuDeAnonymousTask implements Callable<String> {
 	@Override
 	public String call() throws Exception {
 		String result = "";
-		for (String c : this.danmaku)
-			result += StringUtils.commentDeAnonymous(c, user) + "\n";
+		for (String c : this.danmaku) {
+			if (c.startsWith("<d")) {
+				result += StringUtils.commentDeAnonymous(c, user) + "\n";
+			} else {
+				result += c;
+			}
+		}
 		return result;
 	}
 
