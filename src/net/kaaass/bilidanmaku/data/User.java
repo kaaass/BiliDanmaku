@@ -2,6 +2,7 @@ package net.kaaass.bilidanmaku.data;
 
 import com.google.gson.Gson;
 
+import net.kaaass.bilidanmaku.util.FileUtils;
 import net.kaaass.bilidanmaku.util.NetworkUtils;
 
 public class User {
@@ -19,20 +20,22 @@ public class User {
 		switch (type) {
 		case UID:
 			try {
-				String data = "";
-				int p = 0;
-				for (int i = 0; i < 3; i++) {
-					data = NetworkUtils
+				int p = FileUtils.readCache(input);
+				this.mid = String.valueOf(FileUtils.readCache(input));
+				if (p == -1) {
+					String data = NetworkUtils
 							.getJsonString("http://biliquery.typcn.com/api/user/hash/"
 									+ input);
 					p = data.indexOf("\"id\":");
-					if (p > 0)
-						break;
-				}
-				if (p > 0) {
-					this.mid = data.substring(p + 5, data.indexOf("}]}"));
+					if (p > 0) {
+						this.mid = data.substring(p + 5, data.indexOf("}]}"));
+						FileUtils.writeCache("uid" + input,
+								Integer.valueOf(this.mid));
+					} else { // Don't write anonymous in cache.
+						this.anonymous = true;
+					}
 				} else {
-					this.anonymous = true;
+					this.mid = String.valueOf(p);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

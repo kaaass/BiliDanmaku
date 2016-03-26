@@ -14,28 +14,38 @@ public class FileUtils {
 		File f = new File(StringUtils.getCid(xml) + ".xml");
 		if (f.exists())
 			f.delete();
-		try (OutputStreamWriter out = new OutputStreamWriter(
-				new FileOutputStream(f), "UTF-8")) {
-			if (f.createNewFile()) {
-				out.write(xml);
-				out.flush();
-				return true;
-			}
+		try (FileOutputStream fo = new FileOutputStream(f);
+				OutputStreamWriter out = new OutputStreamWriter(fo, "UTF-8")) {
+			f.createNewFile();
+			out.write(xml);
+			out.flush();
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
-		return false;
 	}
 
-	private static void initCache() {
+	public static void initCache() {
 		if (cache == null)
 			cache = new HashMap<String, Integer>();
 		// Get cache from file
 	}
 
+	public static boolean saveCache() {
+		try {
+			// Write cache to file
+			return true;
+		} catch (Exception e) {
+			System.err.println(e);
+			return false;
+		}
+	}
+
 	public static boolean writeCache(String key, int value) {
-		cache.put(key, value);
-		// Write cache
+		synchronized (cache) {
+			cache.put(key, value);
+		}
 		return true;
 	}
 
@@ -48,4 +58,5 @@ public class FileUtils {
 			return -1;
 		}
 	}
+
 }
