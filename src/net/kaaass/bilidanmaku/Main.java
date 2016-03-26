@@ -7,8 +7,6 @@ import net.kaaass.bilidanmaku.util.FileUtils;
 public class Main {
 
 	public static void main(String[] args) {
-		FileUtils.initCache();
-
 		test();
 
 		if (args == null) {
@@ -41,7 +39,7 @@ public class Main {
 		Video.fromURL("http://www.bilibili.com/video/av2608412/").getDanmaku();
 		System.out.println("Time cost: "
 				+ (float) (System.currentTimeMillis() - time) / 1000F + " s.");
-
+		FileUtils.saveCache();
 		System.exit(0);
 	}
 

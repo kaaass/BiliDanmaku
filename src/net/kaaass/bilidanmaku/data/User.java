@@ -20,8 +20,7 @@ public class User {
 		switch (type) {
 		case UID:
 			try {
-				int p = FileUtils.readCache(input);
-				this.mid = String.valueOf(FileUtils.readCache(input));
+				int p = FileUtils.readCache("uid" + input);
 				if (p == -1) {
 					String data = NetworkUtils
 							.getJsonString("http://biliquery.typcn.com/api/user/hash/"
