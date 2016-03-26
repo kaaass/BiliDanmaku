@@ -43,15 +43,28 @@ public class StringUtils {
 	public static int getPoolByComment(String comment) {
 		return Integer.valueOf(comment.split(",", 8)[5]);
 	}
-	
+
 	public static User getUserByComment(String comment) {
-		return User.fromUID(comment.split(",", 8)[6]);
+		return User.fromUID(comment.split(",", 8)[6], User.getInstance());
+	}
+
+	public static User getUserByComment(String comment, User user) {
+		return User.fromUID(comment.split(",", 8)[6], user);
 	}
 
 	public static String commentDeAnonymous(String comment) {
 		if (getPoolByComment(comment) == 0) {
 			return comment.substring(0, comment.indexOf("</d>")) + " ("
 					+ getUserByComment(comment) + ")</d>";
+		} else {
+			return comment;
+		}
+	}
+
+	public static String commentDeAnonymous(String comment, User user) {
+		if (getPoolByComment(comment) == 0) {
+			return comment.substring(0, comment.indexOf("</d>")) + " ("
+					+ getUserByComment(comment, user) + ")</d>";
 		} else {
 			return comment;
 		}

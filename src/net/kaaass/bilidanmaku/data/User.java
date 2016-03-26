@@ -16,7 +16,14 @@ public class User {
 	private int current_level;
 	private boolean anonymous = false;
 
+	private User() {
+	}
+
 	private User(String input, int type) {
+		this.init(input, type);
+	}
+
+	private User init(String input, int type) {
 		switch (type) {
 		case UID:
 			try {
@@ -50,19 +57,24 @@ public class User {
 			break;
 		}
 		this.remote();
+		return this;
 	}
 
-	public static User fromUID(String uid) {
-		return new User(uid, UID);
+	public static User getInstance() {
+		return new User();
 	}
 
-	public static User fromMID(String mid) {
-		return new User(mid, MID);
+	public static User fromUID(String uid, User user) {
+		return user.init(uid, UID);
 	}
 
-	public static User fromSpaceUrl(String url) {
+	public static User fromMID(String mid, User user) {
+		return user.init(mid, MID);
+	}
+
+	public static User fromSpaceUrl(String url, User user) {
 		if (url.indexOf("space.bilibili.com/") > 0) {
-			return new User(url, SPACE);
+			return user.init(url, SPACE);
 		} else {
 			return null;
 		}

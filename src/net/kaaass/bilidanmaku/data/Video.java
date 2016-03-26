@@ -100,11 +100,11 @@ public class Video {
 	 * @return danmaku data
 	 */
 	public String getDanmaku() {
+		System.out.println("Call: http://comment.bilibili.com/" + this.cid
+				+ ".xml");
 		String origin = NetworkUtils
 				.getJsonString("http://comment.bilibili.com/" + this.cid
 						+ ".xml");
-		System.out.println("Call: http://comment.bilibili.com/" + this.cid
-				+ ".xml");
 		System.out.println("Progress: 10%, succeeded fetching Danmaku info.");
 		String data = "";
 		String[] danmaku = StringUtils.deleteXMLHeader(origin).split("\n");
