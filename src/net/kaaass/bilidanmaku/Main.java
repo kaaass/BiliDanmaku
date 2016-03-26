@@ -1,16 +1,15 @@
 package net.kaaass.bilidanmaku;
 
-import net.kaaass.bilidanmaku.data.Video;
 import net.kaaass.bilidanmaku.server.CommentServer;
 
 public class Main {
 
-	private static final boolean DEBUG = true;
+	// private static final boolean DEBUG = true;
 
 	public static void main(String[] args) {
 		CommentServer server = new CommentServer();
 		server.start();
-		System.exit(0);
+		/*
 		if (args == null) {
 			System.out.println("Invalid params.");
 			return;
@@ -28,5 +27,6 @@ public class Main {
 					+ (float) (System.currentTimeMillis() - time) / 1000F
 					+ "s.");
 		System.exit(0);
+		*/
 	}
 }

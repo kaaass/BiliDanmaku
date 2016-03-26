@@ -1,6 +1,7 @@
 package net.kaaass.bilidanmaku.util;
 
 import java.security.MessageDigest;
+import java.util.zip.CRC32;
 
 import net.kaaass.bilidanmaku.data.User;
 
@@ -33,6 +34,12 @@ public class StringUtils {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public static String getCrc32b(String in) {
+		CRC32 crc32 = new CRC32();
+		crc32.update(in.getBytes());
+		return Long.toHexString(crc32.getValue());
 	}
 
 	public static String getCid(String comment) {

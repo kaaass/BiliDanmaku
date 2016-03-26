@@ -12,16 +12,7 @@ Add user's name of each comment in bilibili.
 To be continued...
 
 ##How Data Comes?
-"generate_user_data.php" is the way to generate user data.
-P.S. SQLite command: 
-
-CREATE TABLE IF NOT EXISTS `user_table` (
-
-  `MID` int(11) NOT NULL,
-  
-  `UID` varchar(8) NOT NULL
-  
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+By using the method "getCrc32b" in class "StringUtils", you could able to generate an crc32b data for a string.
 
 ##Thanks to
 Fuckbilibili(http://www.fuckbilibili.com/)
