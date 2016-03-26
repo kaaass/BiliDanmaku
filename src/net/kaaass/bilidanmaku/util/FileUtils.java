@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class FileUtils {
 
-	public static Map<String, Integer> cache;
+	private static Map<String, Integer> cache;
 
 	public static boolean saveXML(String xml) {
 		File f = new File(StringUtils.getCid(xml) + ".xml");

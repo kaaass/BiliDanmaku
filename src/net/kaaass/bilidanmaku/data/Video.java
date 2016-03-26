@@ -36,9 +36,9 @@ public class Video {
 	}
 
 	public static Video fromURL(String url) {
-		int i = url.indexOf("index_");
+		int i = url.indexOf("#page=");
 		if (i > 0) {
-			i = Integer.valueOf(url.substring(i + 6, url.indexOf(".html")));
+			i = Integer.valueOf(url.substring(i + 6, url.length()));
 		} else {
 			i = 1;
 		}
