@@ -5,6 +5,10 @@ Add user's name of each comment in bilibili.
 ![Demo version](demo.png)
 
 ##Runing Step
+1.Append "127.0.0.1 comment.bilibili.com" to your hos file.
+2.Running.
+
+##Working Principle
 To be continued...
 
 ##How Data Comes?

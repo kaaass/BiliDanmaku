@@ -72,7 +72,7 @@ public class StringUtils {
 
 	public static String addXMLHeader(String comment, String origin) {
 		return origin.substring(0, origin.indexOf("<d p=\"")) + comment
-				+ "</i>\n";
+				+ "</i>";
 	}
 
 	public static String deleteXMLHeader(String comment) {

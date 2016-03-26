@@ -36,10 +36,10 @@ public class RequestHandler implements Callable<Void> {
 					Integer.valueOf(request.substring(request.indexOf("/") + 1,
 							request.indexOf(".xml")))).getDanmaku(false);
 			byte[] cont = content.getBytes(Charset.forName("UTF-8"));
-			Deflater compresser = new Deflater(0, true);
+			Deflater compresser = new Deflater(1, true);
 			compresser.setInput(cont);
 			compresser.finish();
-			int length = compresser.deflate(cont); 
+			int length = compresser.deflate(cont);
 			if (request.indexOf("HTTP/") != -1) {
 				String header = "HTTP/1.1 200 OK\r\n" + "Date: "
 						+ (new Date()).toString() + "\r\n"
