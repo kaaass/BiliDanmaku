@@ -10,7 +10,7 @@ public class StringUtils {
 	public final static String APPKEY = "85eb6835b0a1034e";
 	public final static String APP_SECRET = "2ad42749773c441109bdc0191257a664";
 
-	public static String MD5(String s) {
+	public static String md5(String s) {
 		char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
 				'a', 'b', 'c', 'd', 'e', 'f' };
 		try {
@@ -35,7 +35,7 @@ public class StringUtils {
 			return null;
 		}
 	}
-	
+
 	public static String getCrc32b(String in) {
 		CRC32 crc32 = new CRC32();
 		crc32.update(in.getBytes());
@@ -85,5 +85,9 @@ public class StringUtils {
 	public static String deleteXMLHeader(String comment) {
 		return comment.substring(comment.indexOf("<d p=\""),
 				comment.length() - 6);
+	}
+
+	public static boolean isEmpty(String hostName) {
+		return hostName == null ? true : hostName.equals("");
 	}
 }

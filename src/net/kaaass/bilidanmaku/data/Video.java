@@ -14,8 +14,8 @@ import net.kaaass.bilidanmaku.util.StringUtils;
 
 public class Video {
 
-	private final int DANMAKU_PER_TASK = 30;
-	private final int DANMAKU_POOL_SIZE = 15;
+	private final int DANMAKU_PER_TASK = 15;
+	private final int DANMAKU_POOL_SIZE = 30;
 
 	private int aid;
 	private int page;
@@ -112,10 +112,10 @@ public class Video {
 	 * @return danmaku data
 	 */
 	public String getDanmaku(boolean isSave) {
-		System.out.println("Call: http://comment.bilibili.com/" + this.cid
+		System.out.println("Call: http://comment.bilibili.com/rc/" + this.cid
 				+ ".xml");
 		String origin = NetworkUtils
-				.getJsonString("http://comment.bilibili.com/" + this.cid
+				.getJsonString("http://comment.bilibili.com/rc/" + this.cid
 						+ ".xml");
 		System.out.println("Progress: 10%, succeeded fetching Danmaku info.");
 		String data = "";
@@ -156,7 +156,7 @@ public class Video {
 		data = StringUtils.addXMLHeader(data, origin);
 		if (!isSave) {
 			System.out.println("Progress: 100%.");
-			FileUtils.saveCache();
+			// FileUtils.saveCache();
 			return data;
 		}
 		if (FileUtils.saveXML(data)) {
@@ -164,7 +164,7 @@ public class Video {
 		} else {
 			System.out.println("Progress: 100%, error saving.");
 		}
-		FileUtils.saveCache();
+		// FileUtils.saveCache();
 		return data;
 	}
 }

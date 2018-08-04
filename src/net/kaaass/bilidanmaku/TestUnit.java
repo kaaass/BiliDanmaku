@@ -46,4 +46,10 @@ public class TestUnit {
 	public void testCacheSave() {
 		FileUtils.saveCache();
 	}
+	
+	@Test
+	public void testCrc32b() {
+		String crc = StringUtils.getCrc32b("543732");
+		System.out.println("Crc32b: " + crc);
+	}
 }

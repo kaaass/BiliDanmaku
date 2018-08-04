@@ -6,9 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.HttpURLConnection;
-import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
-import java.net.Proxy;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -39,46 +37,40 @@ public class NetworkUtils {
 			ip = "59.152.193." + ip;
 		}
 		Map<String, String> header = new HashMap<String, String>();
-		Proxy proxy = null;
 		header.put("Accept-Encoding", "gzip, deflate");
 		header.put("User-Agent", USER_AGENT);
 		header.put("Client-IP", ip);
 		header.put("X-Forwarded-For", ip);
 		header.put("Cookie", COOKIE);
 		if (url.indexOf("comment.bilibili.com") != -1) {
-			header.put("Host", "comment.bilibili.com");
-			url.replace("comment.bilibili.com", "127.0.0.1");
-			proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("112.16.88.131", 8003));
+			header.put("host", "comment.bilibili.com");
+			url = url.replace("comment.bilibili.com", "bilibili.hdslb.net");
 		}
 		try {
-			return getFromUrl(header, new URL(url), proxy);
+			return getFromUrl(header, new URL(url));
 		} catch (MalformedURLException e) {
 			System.err.println(e);
 			return null;
 		}
 	}
-	
-	private static String getFromUrl(Map<String, String> headerMap, URL loc, Proxy proxy) {
+
+	private static String getFromUrl(Map<String, String> headerMap, URL loc) {
 		String encode = "UTF-8";
 		String result = "";
 		try {
-			HttpURLConnection urlCon;
-			if (proxy == null) {
-				urlCon = (HttpURLConnection)loc.openConnection();
-			} else {
-				urlCon = (HttpURLConnection)loc.openConnection(proxy);
-			}
+			HttpURLConnection urlCon = (HttpURLConnection) loc.openConnection();
 			Iterator<String> header = headerMap.keySet().iterator();
 			while (header.hasNext()) {
 				String key = (String) header.next();
 				urlCon.addRequestProperty(key, headerMap.get(key));
 			}
+			urlCon.connect();
 			String cType = urlCon.getHeaderField("Content-Type");
 			int i = cType.indexOf("charset=");
 			if (i != -1)
 				encode = cType.substring(i + 8);
 			InputStream input;
-			cType = urlCon.getContentEncoding();			
+			cType = urlCon.getContentEncoding();
 			input = new BufferedInputStream(urlCon.getInputStream());
 			if (cType != null) {
 				if (cType.indexOf("gzip") != -1) {
@@ -117,6 +109,6 @@ public class NetworkUtils {
 		}
 		if (appSecret == null)
 			return data;
-		return data + "&sign=" + StringUtils.MD5(data + appSecret);
+		return data + "&sign=" + StringUtils.md5(data + appSecret);
 	}
 }
